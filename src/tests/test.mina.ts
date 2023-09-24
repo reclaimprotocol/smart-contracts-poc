@@ -18,7 +18,7 @@ import {
 
 jest.setTimeout(300_000)
 
-const message = '{"id":123123,"hnid":"sdgsdtgs","email":"berbebqb@qerbqerb.co","full_name":"qerbqerbn","avatar_thumb":"2e3e23e23e","admin":false,"can_view_batch_schedule":true}'
+const message = Buffer.from('MHg2YjIwZDViNzY4ZjI4NTQyZWU0NGIwYjExNzI0OWY5NDE4NGMzYjAxYThiNDVhNDYwZDRjMjM5YTE4YWE2YWNiCjB4NDg1NmU3MWQ1ZWFmOGU5NzJjYmZiNjY3N2RjZTgzYTllYmJmOTVjNgoxNjk1NDg1OTg3CjE=', 'base64').toString('utf-8')
 const messageFields = Encoding.stringToFields(message)
 
 it('should sign off-chain and verify on-chain', async() => {
@@ -59,7 +59,6 @@ it('should sign off-chain and verify on-chain', async() => {
 })
 
 it('should work in smart contract', async() => {
-
 	//init blockchain
 	const Local = Mina.LocalBlockchain({ proofsEnabled: true })
 	Mina.setActiveInstance(Local)
@@ -71,7 +70,7 @@ it('should work in smart contract', async() => {
 	const contractAddress = contractKey.toPublicKey()
 
 	class Msg extends Struct({
-		value: Provable.Array(Field, messageFields.length) //TODO: figure out if arbitrary length arrays are possible
+		value: Provable.Array(Field, 4) //TODO: figure out proper array length
 	}) {
 	}
 
